@@ -17,7 +17,7 @@ const Wrapper = styled.form`
 
 const Form: React.FC = () => {
   const { isLoading } = user;
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const { register, control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       login: "",
@@ -27,6 +27,7 @@ const Form: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.info("payload", data);
     user
       .login(data)
       .then((res) => {
