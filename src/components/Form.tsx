@@ -8,6 +8,8 @@ import { FormElements, FormData } from "../models/InputModel";
 import SubmitButton from "./SubmitButton";
 import Checkbox from "./Checkbox";
 import user from "../store/user";
+import Alert from "./Alert";
+import { IAlertState } from "../models/AlertModel";
 
 const Wrapper = styled.form`
   display: flex;
@@ -17,12 +19,16 @@ const Wrapper = styled.form`
 
 const Form: React.FC = () => {
   const { isLoading } = user;
+  const [alert, setAlert] = React.useState<IAlertState>({
+    isOpen: false,
+    message: null,
+  });
   const navigate = useNavigate();
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       login: "",
@@ -32,6 +38,7 @@ const Form: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    setAlert({ isOpen: false, message: null });
     console.info("payload", data);
     user
       .login(data)
@@ -40,17 +47,14 @@ const Form: React.FC = () => {
         navigate("/profile");
       })
       .catch((error) => {
+        setAlert({ ...alert, isOpen: true, message: error.message });
         console.error("login:", error);
       });
   };
 
-  React.useEffect(() => {
-    console.log(errors);
-    console.log(errors ? "есть" : "нет");
-  }, [errors]);
-
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
+      {alert.isOpen && <Alert message={alert.message} />}
       <Input
         type="text"
         label="Логин"
