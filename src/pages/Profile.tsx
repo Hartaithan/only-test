@@ -22,6 +22,9 @@ const Greetings = styled.p`
     font-size: 30px;
   }
   @media (max-width: 425px) {
+    display: block;
+    text-align: center;
+    line-height: 24px;
     font-size: 20px;
   }
 `;
