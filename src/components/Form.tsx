@@ -18,7 +18,12 @@ const Wrapper = styled.form`
 const Form: React.FC = () => {
   const { isLoading } = user;
   const navigate = useNavigate();
-  const { register, control, handleSubmit } = useForm<FormData>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
     defaultValues: {
       login: "",
       password: "",
@@ -39,6 +44,11 @@ const Form: React.FC = () => {
       });
   };
 
+  React.useEffect(() => {
+    console.log(errors);
+    console.log(errors ? "есть" : "нет");
+  }, [errors]);
+
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -46,14 +56,23 @@ const Form: React.FC = () => {
         label="Логин"
         name={FormElements.Login}
         register={register}
-        required
+        errors={errors.login}
+        validation={{
+          required: { value: true, message: "Обязательное поле" },
+          minLength: { value: 5, message: "Минимальная длина 5 символов" },
+        }}
       />
       <Input
         type="password"
         label="Пароль"
         name={FormElements.Password}
         register={register}
-        required
+        errors={errors.password}
+        validation={{
+          required: { value: true, message: "Обязательное поле" },
+          minLength: { value: 8, message: "Минимальная длина 8 символов" },
+          maxLength: { value: 20, message: "Максимальная длина 20 символов" },
+        }}
       />
       <Controller
         name={FormElements.Remember}

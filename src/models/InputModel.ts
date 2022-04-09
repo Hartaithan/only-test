@@ -1,4 +1,4 @@
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, FieldError, RegisterOptions } from "react-hook-form";
 
 export enum FormElements {
   Login = "login",
@@ -17,5 +17,11 @@ export interface IInputProps {
   label: string;
   name: typeof FormElements[keyof typeof FormElements];
   register: UseFormRegister<FormData>;
-  required: boolean;
+  errors: FieldError | undefined;
+  validation?: RegisterOptions;
+}
+
+export interface IControlProps {
+  type: string;
+  errors: FieldError | undefined;
 }
