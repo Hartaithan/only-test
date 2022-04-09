@@ -1,7 +1,12 @@
 import React from "react";
+import Logo from "./components/Logo";
 
 const App: React.FC = () => {
-  return <div className="App">Hello</div>;
+  return (
+    <>
+      <Logo>ONLY.</Logo>
+    </>
+  );
 };
 
 export default App;
