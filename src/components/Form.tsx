@@ -15,6 +15,7 @@ const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 640px;
+  max-width: 90%;
 `;
 
 const Form: React.FC = () => {

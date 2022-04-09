@@ -18,6 +18,12 @@ const Greetings = styled.p`
   font-size: 40px;
   line-height: 48px;
   color: #000000;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+  @media (max-width: 425px) {
+    font-size: 20px;
+  }
 `;
 
 const Bold = styled(Greetings)`
