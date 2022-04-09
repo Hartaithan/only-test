@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  useForm,
-  SubmitHandler,
-  Controller,
-  FieldValues,
-} from "react-hook-form";
+import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Input from "./Input";
 import { FormElements, FormData } from "../models/InputModel";
 import SubmitButton from "./SubmitButton";
 import Checkbox from "./Checkbox";
+import user from "../store/user";
 
 const Wrapper = styled.form`
   display: flex;
@@ -18,6 +16,8 @@ const Wrapper = styled.form`
 `;
 
 const Form: React.FC = () => {
+  const { isLoading } = user;
+  let navigate = useNavigate();
   const { register, control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       login: "",
@@ -26,8 +26,16 @@ const Form: React.FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    user
+      .login(data)
+      .then((res) => {
+        console.log(res);
+        navigate("/profile");
+      })
+      .catch((error) => {
+        console.error("login:", error);
+      });
   };
 
   return (
@@ -57,9 +65,9 @@ const Form: React.FC = () => {
           />
         )}
       />
-      <SubmitButton>Войти</SubmitButton>
+      <SubmitButton disabled={isLoading}>Войти</SubmitButton>
     </Wrapper>
   );
 };
 
-export default Form;
+export default observer(Form);

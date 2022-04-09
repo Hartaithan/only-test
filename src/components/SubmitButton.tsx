@@ -1,9 +1,10 @@
-import React from "react";
 import styled from "styled-components";
+import { ISubmitButtonProps } from "../models/SubmitButtonModel";
 
-const SubmitButton: React.FC = styled.button.attrs({
+const SubmitButton = styled.button.attrs((props: ISubmitButtonProps) => ({
   type: "submit",
-})`
+  disabled: props.disabled,
+}))`
   height: 60px;
   width: 100%;
   background: #4a67ff;
@@ -21,6 +22,7 @@ const SubmitButton: React.FC = styled.button.attrs({
   }
   &:disabled {
     background: #99a9ff;
+    pointer-events: none;
   }
 `;
 
