@@ -31,7 +31,7 @@ const ProfilePage: React.FC = () => {
     return (
       <Wrapper>
         <Greetings>Необходимо авторизироваться</Greetings>
-        <Button onClick={() => navigate("/")}>Войти</Button>
+        <Button onClick={() => navigate("/login")}>Войти</Button>
       </Wrapper>
     );
   }
@@ -43,7 +43,7 @@ const ProfilePage: React.FC = () => {
       </Greetings>
       <Button
         onClick={() => {
-          navigate("/");
+          navigate("/login");
           user.logout();
         }}
       >
