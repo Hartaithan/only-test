@@ -1,9 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  FieldValues,
+} from "react-hook-form";
 import Input from "./Input";
 import { FormElements, FormData } from "../models/InputModel";
-import SubmitButton from "./Button";
+import SubmitButton from "./SubmitButton";
+import Checkbox from "./Checkbox";
 
 const Wrapper = styled.form`
   display: flex;
@@ -12,7 +18,13 @@ const Wrapper = styled.form`
 `;
 
 const Form: React.FC = () => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, control, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      login: "",
+      password: "",
+      remember: false,
+    },
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
@@ -33,6 +45,17 @@ const Form: React.FC = () => {
         name={FormElements.Password}
         register={register}
         required
+      />
+      <Controller
+        name={FormElements.Remember}
+        control={control}
+        render={({ field }) => (
+          <Checkbox
+            label="Запомнить пароль"
+            onChange={(e) => field.onChange(e.target.checked)}
+            checked={field.value}
+          />
+        )}
       />
       <SubmitButton>Войти</SubmitButton>
     </Wrapper>

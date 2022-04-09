@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const SubmitButton: React.FC = styled.button.attrs(() => ({
+const SubmitButton: React.FC = styled.button.attrs({
   type: "submit",
-}))`
+})`
   height: 60px;
   width: 100%;
   background: #4a67ff;
@@ -14,6 +14,7 @@ const SubmitButton: React.FC = styled.button.attrs(() => ({
   font-size: 18px;
   line-height: 22px;
   color: #ffffff;
+  margin-top: 20px;
   &:hover,
   &:active {
     background: #2544e1;
